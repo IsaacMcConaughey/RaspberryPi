@@ -1,10 +1,10 @@
 # RASPBERRY PI CAMERA SETUP
-
 # sudo raspi-config
 # enable camera
 # sudo apt-get update
 # sudo apt-get install python-picamera
 # sudo apt-get install python3-picamera
+# -----------------------------------------
 
 import picamera
 # from time import sleep
