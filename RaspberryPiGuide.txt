@@ -9,14 +9,8 @@
 
 --- INSTALLING OPERATING SYSTEM IMAGES ---
 
-You will need another computer with an SD card reader to install the image.
 Official images for recommended Operating Systems are available to download from the Raspberry Pi website:
-
 http://www.raspberrypi.org/downloads
-
-Please note that the use of the dd tool can overwrite any partition of your machine.
-If you specify the wrong device in the instructions below you could delete your primary Linux partition.
-Please be careful!!!
 
 Let's see what devices are currently mounted; it will be listed as something like "/dev/mmcblk0p1" or "/dev/sdd1".
 $ sudo df -h
@@ -25,38 +19,33 @@ Now that you've noted what the device name is, you need to unmount it so that fi
 Replacing sdd1 with whatever your SD card's device name is (including the partition number).
 $ sudo umount /dev/sdd1
 
-In the terminal, write the image to the card with the command below
-Replace the input file if= argument with the path to your .img file, and the /dev/sdd in the output file of= argument with the right device name
-Make sure the device name is the name of the whole SD card, not just a partition of it; for example sdd, not sdds1 or sddp1; or mmcblk0, not mmcblk0p1
-Please note that block size set to 4M will work most of the time; if not, please try 1M, although this will take considerably longer
+In the terminal, write the image to the card with the command below:
 $ sudo dd bs=4M if=2015-05-05-raspbian-wheezy.img of=/dev/sdd
 
-# The dd command does not give any information of its progress and so may appear to have frozen; it could take more than five minutes to finish writing to the card
-# Instead of dd you can use dcfldd; it will give a progress report about how much has been written
-# Finaly remove the SD card from the card reader
+Finaly remove the SD card from the card reader
 
 
 --- FIRST BOOT ---
 
-# You will be shown raspi-config on first booting into Raspbian. To open the configuration tool after this, simply run the following from the command line
-sudo raspi-config
+To open the configuration tool after this, simply run the following from the command line
+$ sudo raspi-config
 
 #----------------------------------------------------------------------------------------------------------------------------
 # Raspberry Pi Software Configuration Tool (raspi-config)
 #
 # Setup Options
 #
-#	1 Expand Filesystem                 Ensures that all of the SD card storage is available to the OS
-#	2 Change User Password              Change password for the default user (pi)
-#	3 Enable Boot to Desktop/Scratch	  Choose whether to boot into a desktop environment, Scratch, or the command line
-#	4 Internationalisation Options		  Set up language and regional settings to match your location
-#	5 Enable Camera						          Enable this Pi to work with the Raspberry Pi Camera
-#	6 Add to Rastrack					          Add this Pi to the online Raspberry Pi Map (Rastrack)
-#	7 Overclock							            Configure overclocking for your Pi
-#	8 Advanced Options					        Configure advanced settings
-#	9 About 'raspi-config'				      Information about this configuration tool
+# Expand Filesystem                 Ensures that all of the SD card storage is available to the OS
+#	Change User Password              Change password for the default user (pi)
+#	Enable Boot to Desktop/Scratch	  Choose whether to boot into a desktop environment, Scratch, or the command line
+#	Internationalisation Options		  Set up language and regional settings to match your location
+#	Enable Camera						          Enable this Pi to work with the Raspberry Pi Camera
+#	Add to Rastrack					          Add this Pi to the online Raspberry Pi Map (Rastrack)
+#	Overclock							            Configure overclocking for your Pi
+#	Advanced Options					        Configure advanced settings
+#	About 'raspi-config'				      Information about this configuration tool
 #
-# <Select>              <Finish>
+#             <Select>              <Finish>
 #----------------------------------------------------------------------------------------------------------------------------
 
 # 1) Expand the filesystem
