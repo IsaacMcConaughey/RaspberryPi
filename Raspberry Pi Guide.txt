@@ -1,0 +1,241 @@
+--- RASPBERRY PI GUIDE ---
+
+- INSTALLING OPERATING SYSTEM IMAGES
+- FIRST BOOT
+- USB WI-FI SETUP (TP-LINK TL-WN725N) --- LAST UPDATED: 30/06/2015
+- INSTALL OPENCV
+- CAMERA SETUP
+
+
+--- INSTALLING OPERATING SYSTEM IMAGES ---
+
+# How to install a Raspberry Pi Operating System image on an SD card. You will need another computer with an SD card reader to install the image
+# Official images for recommended Operating Systems are available to download from the Raspberry Pi website: http://www.raspberrypi.org/downloads
+
+# Please note that the use of the dd tool can overwrite any partition of your machine
+# If you specify the wrong device in the instructions below you could delete your primary Linux partition
+# Please be careful!
+
+# Let's see what devices are currently mounted; it will be listed as something like /dev/mmcblk0p1 or /dev/sdd1
+sudo df -h
+
+# Now that you've noted what the device name is, you need to unmount it so that files can't be read or written to the SD card
+# Replacing sdd1 with whatever your SD card's device name is (including the partition number)
+sudo umount /dev/sdd1
+
+# In the terminal, write the image to the card with the command below
+# Replace the input file if= argument with the path to your .img file, and the /dev/sdd in the output file of= argument with the right device name
+# Make sure the device name is the name of the whole SD card, not just a partition of it; for example sdd, not sdds1 or sddp1; or mmcblk0, not mmcblk0p1
+# Please note that block size set to 4M will work most of the time; if not, please try 1M, although this will take considerably longer
+sudo dd bs=4M if=2015-05-05-raspbian-wheezy.img of=/dev/sdd
+
+# The dd command does not give any information of its progress and so may appear to have frozen; it could take more than five minutes to finish writing to the card
+# Instead of dd you can use dcfldd; it will give a progress report about how much has been written
+# Finaly remove the SD card from the card reader
+
+
+--- FIRST BOOT ---
+
+# You will be shown raspi-config on first booting into Raspbian. To open the configuration tool after this, simply run the following from the command line
+sudo raspi-config
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#					Raspberry Pi Software Configuration Tool (raspi-config)
+#
+# Setup Options
+#
+#	1 Expand Filesystem					Ensures that all of the SD card storage is available to the OS
+#	2 Change User Password				Change password for the default user (pi)
+#	3 Enable Boot to Desktop/Scratch	Choose whether to boot into a desktop environment, Scratch, or the command line
+#	4 Internationalisation Options		Set up language and regional settings to match your location
+#	5 Enable Camera						Enable this Pi to work with the Raspberry Pi Camera
+#	6 Add to Rastrack					Add this Pi to the online Raspberry Pi Map (Rastrack)
+#	7 Overclock							Configure overclocking for your Pi
+#	8 Advanced Options					Configure advanced settings
+#	9 About 'raspi-config'				Information about this configuration tool
+#
+#							<Select>							<Finish>
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+# 1) Expand the filesystem
+# A portion of the card will be unused; this can be any amount over 3GB
+# Choosing this option will expand your installation to fill the rest of the SD card, giving you more space to use for files
+
+# 2) Check your local timezone and change the keyboard layout
+
+# 3) Enable the camera
+# In order to use the Raspberry Pi camera module, you must enable it here. Select the option and proceed to Enable
+
+# 4) Finish and reboot
+# Use this button when you have completed your changes. You will be asked whether you want to reboot or not
+
+
+--- USB WI-FI SETUP (TP-LINK TL-WN725N) --- LAST UPDATED: 30/06/2015 ---
+
+# Driver files available for the TP-LINK TL-WN725N and similar wifi dongles using the 8188eu driver module for systems using the Raspbian image
+# First check the version of Linux you have. Use the command uname -a to find the version of Linux
+sudo uname -a
+
+# For example:
+#-------------------------------------------------------------------------------------------------
+# Linux raspberrypi 3.10.24+ #614 PREEMPT Thu Dec 19 20:38:42 GMT 2013 armv6l GNU/Linux
+#-------------------------------------------------------------------------------------------------
+# The important part is 3.10.24+ #614. This is just an example and your version may be different
+
+# Download the driver file selecting the right driver for your kernel version from the site above, then install the 3.18 drivers
+# https://www.raspberrypi.org/forums/viewtopic.php?p=462982#p462982
+
+# Download the driver (RPi A, A+, B, B+)
+# Replace "yyzz" in the wget and tar commands to select the right driver file
+sudo wget https://dl.dropboxusercontent.com/u/80256631/8188eu-2015yyzz.tar.gz
+
+# Untar the tar.gz driver file
+# Remember to replace "yyzz"
+sudo tar xzf 8188eu-2015yyzz.tar.gz
+
+# Run the install.sh command
+sudo ./install.sh
+
+# (RPi 2 B) For the Pi 2 the filename includes an additional "-v7" so use:
+sudo wget https://dl.dropboxusercontent.com/u/80256631/8188eu-v7-2015yyzz.tar.gz
+sudo tar xzf 8188eu-v7-2015yyzz.tar.gz
+sudo ./install.sh
+
+# "install.sh" will install the driver file and copy the file 8188eu.conf to directory /etc/modprobe.d
+# Finally reboot
+sudo reboot
+
+--- INSTALL OPENCV ---
+
+# http://www.pyimagesearch.com/2015/02/23/install-opencv-and-python-on-your-raspberry-pi-2-and-b/
+
+# I’m going to assume that you have just unboxed your Raspberry Pi 2/B+
+# Open up a terminal and we’ll start by updating and upgrading installed packages, followed by updating the Raspberry Pi firmware
+sudo apt-get update
+sudo apt-get upgrade
+sudo rpi-update
+
+# Install the required developer tools and packages
+sudo apt-get install build-essential cmake pkg-config
+
+# Install the necessary image I/O packages. These packages allow you to load various image file formats such as JPEG, PNG, TIFF, etc
+sudo apt-get install libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev
+
+# Install the GTK development library. This library is used to build Graphical User Interfaces
+sudo apt-get install libgtk2.0-dev
+
+# Install the necessary video I/O packages. These packages are used to load video files using OpenCV
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+
+# Install libraries that are used to optimize various operations within OpenCV
+sudo apt-get install libatlas-base-dev gfortran
+
+# Install pip
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+
+# Install  virtualenv  and virtualenvwrapper
+sudo pip install virtualenv virtualenvwrapper
+
+# Then, update your ~/.profile  file to include the following lines:
+sudo nano ~/.profile
+--------------------------------------------------
+# virtualenv and virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+--------------------------------------------------
+
+# Reload your .profile  file
+source ~/.profile
+
+# Create your computer vision virtual environment
+mkvirtualenv cv
+
+# Now we can install the Python 2.7 development tools and numpy (probably already installed)
+sudo apt-get install python2.7-dev
+pip install numpy
+
+# Download OpenCV and unpack it
+wget -O opencv-2.4.10.zip http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.10/opencv-2.4.10.zip/download
+unzip opencv-2.4.10.zip
+cd opencv-2.4.10
+
+# Setup the build
+mkdir build
+$ cd build
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_NEW_PYTHON_SUPPORT=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON  -D BUILD_EXAMPLES=ON ..
+
+# Compile OpenCV
+make
+
+# Finally, we can install OpenCV
+sudo make install
+sudo ldconfig
+
+# If you’ve gotten this far in the guide, OpenCV should now be installed in  /usr/local/lib/python2.7/site-packages
+# But in order to utilize OpenCV within our cv  virtual environment, we first need to sym-link OpenCV into our site-packages  directory
+cd ~/.virtualenvs/cv/lib/python2.7/site-packages/
+ln -s /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
+ln -s /usr/local/lib/python2.7/site-packages/cv.py cv.py
+
+# Finally, we can give our OpenCV and Python installation a test drive
+workon cv
+
+python
+>>> import cv2
+>>> cv2.__version__
+'2.4.10'
+
+# OpenCV and Python is now successfully installed on your Raspberry Pi!
+
+
+--- CAMERA SETUP ---
+
+# python-picamera is a pure Python interface to the Raspberry Pi camera module for Python 2.7 (or above) or Python 3.2 (or above)
+
+# The python-picamera library is available in the Raspbian archives. Run:
+sudo apt-get update
+sudo apt-get install python-picamera
+
+# Alternatively, the Python3 package is installed with:
+sudo apt-get install python3-picamera
+
+# Setup:
+# After the installation, at the Python prompt or at the top of a Python script, enter:
+python
+>>> import picamera
+>>> camera = picamera.PiCamera()	# create an instance of the PiCamera class
+>>> camera.capture('image.jpg')		# take a picture
+
+# Horizontal and vertical flip
+camera.hflip = True
+camera.vflip = True
+
+# Preview. You can display a preview showing the camera feed on screen
+camera.start_preview()
+camera.stop_preview()
+
+# Camera settings
+# You can change other camera configuration by editing property values; here is a list with their default values:
+camera.sharpness = 0
+camera.contrast = 0
+camera.brightness = 50
+camera.saturation = 0
+camera.ISO = 0
+camera.video_stabilization = False
+camera.exposure_compensation = 0
+camera.exposure_mode = 'auto'
+camera.meter_mode = 'average'
+camera.awb_mode = 'auto'
+camera.image_effect = 'none'
+camera.color_effects = None
+camera.rotation = 0
+camera.hflip = False
+camera.vflip = False
+camera.crop = (0.0, 0.0, 1.0, 1.0)
+
+# Video recording
+# Record 5 seconds of video:
+camera.start_recording('video.h264')
+sleep(5)
+camera.stop_recording()
