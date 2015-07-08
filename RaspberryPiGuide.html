@@ -1,4 +1,4 @@
---- RASPBERRY PI GUIDE ---
+<b>--- RASPBERRY PI GUIDE ---</b>
 
 - INSTALLING OPERATING SYSTEM IMAGES
 - FIRST BOOT
@@ -9,16 +9,16 @@
 
 --- INSTALLING OPERATING SYSTEM IMAGES ---
 
-# How to install a Raspberry Pi Operating System image on an SD card.
-# You will need another computer with an SD card reader to install the image
-# Official images for recommended Operating Systems are available to download from the Raspberry Pi website:
-# http://www.raspberrypi.org/downloads
+You will need another computer with an SD card reader to install the image.
+Official images for recommended Operating Systems are available to download from the Raspberry Pi website:
 
-# Please note that the use of the dd tool can overwrite any partition of your machine
-# If you specify the wrong device in the instructions below you could delete your primary Linux partition
-# Please be careful!
+http://www.raspberrypi.org/downloads
 
-# Let's see what devices are currently mounted; it will be listed as something like /dev/mmcblk0p1 or /dev/sdd1
+Please note that the use of the dd tool can overwrite any partition of your machine.
+If you specify the wrong device in the instructions below you could delete your primary Linux partition.
+Please be careful!!!
+
+Let's see what devices are currently mounted; it will be listed as something like "/dev/mmcblk0p1" or "/dev/sdd1".
 sudo df -h
 
 # Now that you've noted what the device name is, you need to unmount it so that files can't be read or written to the SD card
