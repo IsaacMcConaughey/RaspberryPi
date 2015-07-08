@@ -1,11 +1,3 @@
-# Pelco-D-Raspberry-Pi
-# How to implementing the Pelco D Protocol on the Raspberry Pi with Python
-# Written by Isaac McConaughey
-
-# Requirements:
-# - Raspberry Pi with Python installed
-# - Rotating bracket connected via USB
-
 import serial
 
 ser = serial.Serial(
