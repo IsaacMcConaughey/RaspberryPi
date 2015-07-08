@@ -25,7 +25,7 @@ while True:
 	a = input("command:")
 	
 	if a == 0:
-        	print "closing...       FF 01 00 00 00 00 01"
+        	print "closing...	FF 01 00 00 00 00 01"
         	ser.write("\xFF\x01\x00\x00\x00\x00\x01")
         	ser.close()
         	exit()
@@ -33,6 +33,10 @@ while True:
         if a == 1:
         	print "pan left ;       FF 01 00 04 00 00 05"
 		ser.write("\xFF\x01\x00\x04\x00\x00\x05")
+
+	if a == 2:
+                print "pan right ;	FF 01 00 02 00 00 03"
+                ser.write("\xFF\x01\x00\x02\x00\x00\x03")
     
 	if a == 3:
 	        print "pan stop ;       FF 01 00 00 00 00 01"
