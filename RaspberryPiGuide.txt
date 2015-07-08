@@ -1,4 +1,4 @@
-<b>--- RASPBERRY PI GUIDE ---</b>
+--- RASPBERRY PI GUIDE ---
 
 - INSTALLING OPERATING SYSTEM IMAGES
 - FIRST BOOT
@@ -19,17 +19,17 @@ If you specify the wrong device in the instructions below you could delete your 
 Please be careful!!!
 
 Let's see what devices are currently mounted; it will be listed as something like "/dev/mmcblk0p1" or "/dev/sdd1".
-sudo df -h
+$ sudo df -h
 
-# Now that you've noted what the device name is, you need to unmount it so that files can't be read or written to the SD card
-# Replacing sdd1 with whatever your SD card's device name is (including the partition number)
-sudo umount /dev/sdd1
+Now that you've noted what the device name is, you need to unmount it so that files can't be read or written to the SD card.
+Replacing sdd1 with whatever your SD card's device name is (including the partition number).
+$ sudo umount /dev/sdd1
 
-# In the terminal, write the image to the card with the command below
-# Replace the input file if= argument with the path to your .img file, and the /dev/sdd in the output file of= argument with the right device name
-# Make sure the device name is the name of the whole SD card, not just a partition of it; for example sdd, not sdds1 or sddp1; or mmcblk0, not mmcblk0p1
-# Please note that block size set to 4M will work most of the time; if not, please try 1M, although this will take considerably longer
-sudo dd bs=4M if=2015-05-05-raspbian-wheezy.img of=/dev/sdd
+In the terminal, write the image to the card with the command below
+Replace the input file if= argument with the path to your .img file, and the /dev/sdd in the output file of= argument with the right device name
+Make sure the device name is the name of the whole SD card, not just a partition of it; for example sdd, not sdds1 or sddp1; or mmcblk0, not mmcblk0p1
+Please note that block size set to 4M will work most of the time; if not, please try 1M, although this will take considerably longer
+$ sudo dd bs=4M if=2015-05-05-raspbian-wheezy.img of=/dev/sdd
 
 # The dd command does not give any information of its progress and so may appear to have frozen; it could take more than five minutes to finish writing to the card
 # Instead of dd you can use dcfldd; it will give a progress report about how much has been written
