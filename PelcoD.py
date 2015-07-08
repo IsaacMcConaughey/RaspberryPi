@@ -31,27 +31,27 @@ while True:
         	exit()
         
         if a == 1:
-        	print "pan left ;       FF 01 00 04 00 00 05"
+        	print "pan left		FF 01 00 04 00 00 05"
 		ser.write("\xFF\x01\x00\x04\x00\x00\x05")
 
 	if a == 2:
-                print "pan right ;	FF 01 00 02 00 00 03"
+                print "pan right	FF 01 00 02 00 00 03"
                 ser.write("\xFF\x01\x00\x02\x00\x00\x03")
     
 	if a == 3:
-	        print "pan stop ;       FF 01 00 00 00 00 01"
+	        print "pan stop		FF 01 00 00 00 00 01"
 	        ser.write("\xFF\x01\x00\x00\x00\x00\x01")
     
     	if a == 4:
-	        print "set preset ;     FF 01 00 03 00 01 05"
+	        print "set preset	FF 01 00 03 00 01 05"
 	        ser.write("\xFF\x01\x00\x03\x00\x01\x05")
     
     	if a == 5:
-	        print "go to preset ;   FF 01 00 07 00 01 09"
+	        print "go to preset	FF 01 00 07 00 01 09"
 	        ser.write("\xFF\x01\x00\x07\x00\x01\x09")
     
     	if a == 6:
-	        print "clear preset ;   FF 01 00 05 00 01 07"
+	        print "clear preset	FF 01 00 05 00 01 07"
 	        ser.write("\xFF\x01\x00\x05\x00\x01\x07")
 
 print "No USB found"
