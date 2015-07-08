@@ -9,8 +9,10 @@
 
 --- INSTALLING OPERATING SYSTEM IMAGES ---
 
-# How to install a Raspberry Pi Operating System image on an SD card. You will need another computer with an SD card reader to install the image
-# Official images for recommended Operating Systems are available to download from the Raspberry Pi website: http://www.raspberrypi.org/downloads
+# How to install a Raspberry Pi Operating System image on an SD card.
+# You will need another computer with an SD card reader to install the image
+# Official images for recommended Operating Systems are available to download from the Raspberry Pi website:
+# http://www.raspberrypi.org/downloads
 
 # Please note that the use of the dd tool can overwrite any partition of your machine
 # If you specify the wrong device in the instructions below you could delete your primary Linux partition
@@ -40,7 +42,7 @@ sudo dd bs=4M if=2015-05-05-raspbian-wheezy.img of=/dev/sdd
 sudo raspi-config
 
 #----------------------------------------------------------------------------------------------------------------------------
-#					Raspberry Pi Software Configuration Tool (raspi-config)
+# Raspberry Pi Software Configuration Tool (raspi-config)
 #
 # Setup Options
 #
@@ -54,7 +56,7 @@ sudo raspi-config
 #	8 Advanced Options					        Configure advanced settings
 #	9 About 'raspi-config'				      Information about this configuration tool
 #
-#							      <Select>              <Finish>
+# <Select>              <Finish>
 #----------------------------------------------------------------------------------------------------------------------------
 
 # 1) Expand the filesystem
